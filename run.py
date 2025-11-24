@@ -31,14 +31,15 @@ def time_sync():
     global ready_to_start_sync
     global ready_to_start_view
 
-    asset_map = downloader.get_album_assets()
-
     while True:
 
         if ready_to_start_sync:
             asset_map2 = downloader.get_album_assets()
 
+            print(1)
+
             if asset_map != asset_map2:
+                print(2)
                 downloader.smart_sync()
                 asset_map = asset_map2
                 run_viewer = False  # Reinicia o visualizador para atualizar a lista de imagens
