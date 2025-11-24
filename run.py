@@ -11,7 +11,8 @@ DELAY_SHOW = 10            # Segundos entre imagens
 
 asset_map = {}
 run_viewer = False
-ready_to_start = False
+ready_to_start_sync = False
+ready_to_start_view = False
 
 def time_update():
     while True:
@@ -23,27 +24,29 @@ def time_sync():
 
     global asset_map
     global run_viewer
-    global ready_to_start
+    global ready_to_start_sync
+    global ready_to_start_view
 
     asset_map = downloader.get_album_assets()
 
     while True:
 
-        asset_map2 = downloader.get_album_assets()
+        if ready_to_start_sync:
+            asset_map2 = downloader.get_album_assets()
 
-        if asset_map != asset_map2:
-            downloader.smart_sync()
-            asset_map = asset_map2
-            run_viewer = False  # Reinicia o visualizador para atualizar a lista de imagens
-            ready_to_start = True
-        time.sleep(TIME_TO_SYNC)  # Sincroniza a cada 10 minutos
+            if asset_map != asset_map2:
+                downloader.smart_sync()
+                asset_map = asset_map2
+                run_viewer = False  # Reinicia o visualizador para atualizar a lista de imagens
+                ready_to_start_view = True
+            time.sleep(TIME_TO_SYNC)  # Sincroniza a cada 10 minutos
 
 def view_images():
     global run_viewer
-    global ready_to_start
+    global ready_to_start_view
 
     while True:
-        if ready_to_start:
+        if ready_to_start_view:
             if not run_viewer:
                 run_viewer = True
                 os.system("pkill feh")  # Termina instâncias existentes do feh
