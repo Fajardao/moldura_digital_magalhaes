@@ -1,9 +1,8 @@
-import requests
+
 import os
-import glob
 
 import updater
-import downloder
+import downloader
 
 
 if __name__ == "__main__":
