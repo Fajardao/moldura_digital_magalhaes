@@ -20,7 +20,7 @@ def get_album_assets():
         response = requests.get(url, headers=headers, verify=False, timeout=10)
         response.raise_for_status()
 
-        album_name = response.json().get('name')
+        album_name = response.json().get('albumName')
 
         logging.info(f"A obter assets do álbum {album_name}...")
 
