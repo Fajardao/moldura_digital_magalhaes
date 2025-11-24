@@ -11,6 +11,7 @@ DELAY_SHOW = 10            # Segundos entre imagens
 
 asset_map = {}
 run_viewer = False
+ready_to_start = False
 
 def time_update():
     while True:
@@ -22,6 +23,7 @@ def time_sync():
 
     global asset_map
     global run_viewer
+    global ready_to_start
 
     asset_map = downloader.get_album_assets()
 
@@ -33,20 +35,20 @@ def time_sync():
             downloader.smart_sync()
             asset_map = asset_map2
             run_viewer = False  # Reinicia o visualizador para atualizar a lista de imagens
+            ready_to_start = True
         time.sleep(TIME_TO_SYNC)  # Sincroniza a cada 10 minutos
 
 def view_images():
     global run_viewer
-
-    while not os.path.exists(downloader.DOWNLOAD_FOLDER):
-        time.sleep(5)  # Espera até a pasta de downloads existir
+    global ready_to_start
 
     while True:
-        if not run_viewer:
-            run_viewer = True
-            os.system("pkill feh")  # Termina instâncias existentes do feh
-            time.sleep(2)  # Espera o feh terminar
-            os.system(f"feh -r -z -F -D {DELAY_SHOW} {downloader.DOWNLOAD_DIR} &")
+        if ready_to_start:
+            if not run_viewer:
+                run_viewer = True
+                os.system("pkill feh")  # Termina instâncias existentes do feh
+                time.sleep(2)  # Espera o feh terminar
+                os.system(f"feh -r -z -F -D {DELAY_SHOW} {downloader.DOWNLOAD_FOLDER} &")
     
 
 if __name__ == "__main__":
