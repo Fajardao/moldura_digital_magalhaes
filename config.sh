@@ -4,15 +4,15 @@ CONFIG_FILE="data.sh"
 
 function get_config() {
     # Inicializa variáveis com valores vazios
-    IMMICH_URL=""
+    IMMICH_URL_LOCAL=""
     IMMICH_PORT=""
     API_KEY=""
     ALBUM_ID=""
 
 
     # Tenta obter a URL do Immich
-    IMMICH_URL=$(dialog --title "CONFIGURAÇÃO IMMICH" \
-        --inputbox "IP do servidor Immich" 10 60 "$IMMICH_URL" 2>&1 >/dev/tty)
+    IMMICH_URL_LOCAL=$(dialog --title "CONFIGURAÇÃO IMMICH" \
+        --inputbox "IP do servidor Immich" 10 60 "$IMMICH_URL_LOCAL" 2>&1 >/dev/tty)
     
     if [ $? -ne 0 ]; then return 1; fi # Sair se o utilizador cancelar
 
@@ -34,7 +34,7 @@ function get_config() {
     if [ $? -ne 0 ]; then return 1; fi
 
     # Confirmação Final
-    dialog --title "CONFIRMAÇÃO" --yesno "Tem certeza que as informações estão corretas?\n\nURL: $IMMICH_URL\nAPI: $API_KEY (parcial)\nALBUM: $ALBUM_ID" 15 60
+    dialog --title "CONFIRMAÇÃO" --yesno "Tem certeza que as informações estão corretas?\n\nURL: $IMMICH_URL_LOCAL\nAPI: $API_KEY (parcial)\nALBUM: $ALBUM_ID" 15 60
     if [ $? -ne 0 ]; then get_config; fi # Se for Não, recomeça
 
     # Salva no ficheiro de configuração
@@ -44,7 +44,7 @@ function get_config() {
 function save_config() {
     echo "#!/bin/bash" > "$CONFIG_FILE"
     echo "# Ficheiro de configurações gerado pelo setup_magalhaes.sh" >> "$CONFIG_FILE"
-    echo "export IMMICH_URL=\"$IMMICH_URL:$IMMICH_PORT/api\"" >> "$CONFIG_FILE"
+    echo "export IMMICH_URL=\"$IMMICH_URL_LOCAL:$IMMICH_PORT/api\"" >> "$CONFIG_FILE"
     echo "export API_KEY=\"$API_KEY\"" >> "$CONFIG_FILE"
     echo "export ALBUM_ID=\"$ALBUM_ID\"" >> "$CONFIG_FILE"
     
@@ -66,7 +66,7 @@ function persist_env_vars() {
         if [ $? -eq 0 ]; then
             tmpfile=$(mktemp)
             cat > "$tmpfile" <<EOF
-export IMMICH_URL="${IMMICH_URL}:${IMMICH_PORT}/api"
+export IMMICH_URL="${IMMICH_URL_LOCAL}:${IMMICH_PORT}/api"
 export API_KEY="${API_KEY}"
 export ALBUM_ID="${ALBUM_ID}"
 EOF
@@ -81,7 +81,7 @@ EOF
                 dialog --title "SUCESSO" --msgbox "Não encontrei 'sudo'. Adicionadas variáveis a ~/.profile." 10 70
             fi
         else
-            echo "export IMMICH_URL=\"${IMMICH_URL}:${IMMICH_PORT}/api\"" >> ~/.profile
+            echo "export IMMICH_URL=\"${IMMICH_URL_LOCAL}:${IMMICH_PORT}/api\"" >> ~/.profile
             echo "export API_KEY=\"${API_KEY}\"" >> ~/.profile
             echo "export ALBUM_ID=\"${ALBUM_ID}\"" >> ~/.profile
             dialog --title "SUCESSO" --msgbox "Variáveis adicionadas a ~/.profile. Faça 'source ~/.profile' ou abra um novo terminal." 10 70
