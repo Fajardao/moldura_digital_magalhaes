@@ -50,7 +50,8 @@ function save_config() {
     
     chmod +x "$CONFIG_FILE"
 
-    ./"$CONFIG_FILE"
+    # Carrega as variáveis no ambiente desta shell (não no shell pai).
+    . "$CONFIG_FILE"
     
     dialog --title "SUCESSO" --msgbox "Configurações guardadas em '$CONFIG_FILE'.\nPronto para iniciar o serviço." 10 60
 }
@@ -67,7 +68,9 @@ fi
 # Inicia a recolha de dados
 get_config
 
-bash data.sh
+# Se quiser carregar as variáveis no ambiente actual da shell,
+# deve 'source' este ficheiro em vez de o executar.
+. "$CONFIG_FILE"
 
 # --- 3. FINALIZAÇÃO ---
 echo "As configurações foram guardadas em '$CONFIG_FILE'."
