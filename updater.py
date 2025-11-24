@@ -43,6 +43,8 @@ def perform_update():
     logging.info("Iniciando o processo de atualização...")
 
     os.system("git fetch origin main")
+    os.system("git reset --hard origin/main")
+    os.system("git clean -fd")
     os.system("git pull origin main")
 
     logging.info("Atualização concluída com sucesso.")
