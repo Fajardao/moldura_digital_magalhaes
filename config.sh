@@ -44,9 +44,9 @@ function get_config() {
 function save_config() {
     echo "#!/bin/bash" > "$CONFIG_FILE"
     echo "# Ficheiro de configurações gerado pelo setup_magalhaes.sh" >> "$CONFIG_FILE"
-    echo "IMMICH_URL=\"$IMMICH_URL:$IMMICH_PORT/api\"" >> "$CONFIG_FILE"
-    echo "API_KEY=\"$API_KEY\"" >> "$CONFIG_FILE"
-    echo "ALBUM_ID=\"$ALBUM_ID\"" >> "$CONFIG_FILE"
+    echo "export IMMICH_URL=\"$IMMICH_URL:$IMMICH_PORT/api\"" >> "$CONFIG_FILE"
+    echo "export API_KEY=\"$API_KEY\"" >> "$CONFIG_FILE"
+    echo "export ALBUM_ID=\"$ALBUM_ID\"" >> "$CONFIG_FILE"
     
     chmod +x "$CONFIG_FILE"
 
@@ -67,8 +67,7 @@ fi
 # Inicia a recolha de dados
 get_config
 
-# Clona os ficheiros necessários
-get_files
+bash data.sh
 
 # --- 3. FINALIZAÇÃO ---
 echo "As configurações foram guardadas em '$CONFIG_FILE'."
