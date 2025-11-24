@@ -81,7 +81,7 @@ EOF
                 dialog --title "SUCESSO" --msgbox "Não encontrei 'sudo'. Adicionadas variáveis a ~/.profile." 10 70
             fi
         else
-            echo "export IMMICH_URL=\"${IMMICH_URL_LOCAL}:${IMMICH_PORT}/api\"" >> ~/.profile
+            echo "export IMMICH_URL=\"http://${IMMICH_URL_LOCAL}:${IMMICH_PORT}/api\"" >> ~/.profile
             echo "export API_KEY=\"${API_KEY}\"" >> ~/.profile
             echo "export ALBUM_ID=\"${ALBUM_ID}\"" >> ~/.profile
             dialog --title "SUCESSO" --msgbox "Variáveis adicionadas a ~/.profile. Faça 'source ~/.profile' ou abra um novo terminal." 10 70
