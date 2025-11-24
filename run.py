@@ -10,4 +10,4 @@ if __name__ == "__main__":
     if updater.is_update_needed():
         updater.perform_update()
 
-    downloader.get_album_assets()
+    downloader.smart_sync()
