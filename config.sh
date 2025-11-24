@@ -23,13 +23,13 @@ function get_config() {
 
     # Tenta obter a Chave API
     API_KEY=$(dialog --title "CONFIGURAÇÃO IMMICH" \
-        --inputbox "Chave API do Immich (VjiJvripKDXBgr...)" 10 60 "$API_KEY" 2>&1 >/dev/tty)
+        --inputbox "Chave API do Immich" 10 60 "$API_KEY" 2>&1 >/dev/tty)
 
     if [ $? -ne 0 ]; then return 1; fi
 
     # Tenta obter o ID do Álbum
     ALBUM_ID=$(dialog --title "CONFIGURAÇÃO IMMICH" \
-        --inputbox "ID do Álbum Dedicado (Ex: 9b2b8d46-12f4-42b5-8f69-37140bc4430f)" 10 60 "$ALBUM_ID" 2>&1 >/dev/tty)
+        --inputbox "ID do Álbum Dedicado" 10 60 "$ALBUM_ID" 2>&1 >/dev/tty)
 
     if [ $? -ne 0 ]; then return 1; fi
 

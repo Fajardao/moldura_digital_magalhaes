@@ -81,15 +81,12 @@ if [ -f "$CONFIG_FILE" ]; then
     dialog --title "FICHEIRO EXISTENTE" --yesno "O ficheiro '$CONFIG_FILE' já existe. Deseja reconfigurar e sobrescrever?" 10 60
     if [ $? -ne 0 ]; then 
         echo "Instalação cancelada. Utilize o ficheiro existente."
-        clear
         exit 0
     fi
 fi
 
 # Inicia a recolha de dados
 get_config
-
-clear
 
 # Clona os ficheiros necessários
 get_files
