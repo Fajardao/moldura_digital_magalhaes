@@ -2,6 +2,8 @@ import requests
 import os
 import logging
 
+logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+
 def get_remote_version():
     """Obtém o conteúdo do ficheiro 'version' diretamente da API do GitHub."""
     

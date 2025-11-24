@@ -3,7 +3,7 @@ import os
 import glob
 
 import updater
-#import downloder
+import downloder
 
 
 if __name__ == "__main__":
