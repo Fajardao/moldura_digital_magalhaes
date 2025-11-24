@@ -15,6 +15,7 @@ ready_to_start_sync = False
 ready_to_start_view = False
 
 def time_update():
+    global ready_to_start_sync
     while True:
         if updater.is_update_needed():
             updater.perform_update()
