@@ -19,7 +19,7 @@ def time_update():
     while True:
         if updater.is_update_needed():
             updater.perform_update()
-            ready_to_start_sync = True
+            exit()
         else:
             ready_to_start_sync = True  # Mesmo sem update, inicia a sincronização
         time.sleep(TIME_TO_UPDATE_CHECK)  # Verifica a cada hora
