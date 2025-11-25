@@ -4,6 +4,13 @@ import logging
 
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
+def parse_version(version_string):
+    """Converte string de versão (ex: '0.9', '1.2.3') para tupla de ints para comparação."""
+    try:
+        return tuple(map(int, version_string.split('.')))
+    except (ValueError, AttributeError):
+        return (0, 0, 0)  # Versão inválida, assume 0.0.0
+
 def get_remote_version():
     """Obtém o conteúdo do ficheiro 'version' diretamente da API do GitHub."""
     
@@ -33,7 +40,10 @@ def is_update_needed():
     if remote_version is None:
         return False  # Não faz nada se falhar a verificação
     
-    if remote_version > local_version:
+    local_parsed = parse_version(local_version)
+    remote_parsed = parse_version(remote_version)
+    
+    if remote_parsed > local_parsed:
         print("UPDATE_REQUIRED")
         return True
     else:
