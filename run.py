@@ -23,7 +23,6 @@ def time_update():
         if updater.is_update_needed():
             updater.perform_update()
             kill=True
-            exit()
         else:
             ready_to_start_sync = True  # Mesmo sem update, inicia a sincronização
         time.sleep(TIME_TO_UPDATE_CHECK)  # Verifica a cada hora
@@ -70,11 +69,8 @@ if __name__ == "__main__":
     sync_thread.start()
     view_thread.start()
 
-    update_thread.join()
-    sync_thread.join()
-    view_thread.join()
-
     while True:
         time.sleep(1)
         if kill:
+            print(1234)
             exit()
