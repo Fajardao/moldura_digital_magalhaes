@@ -14,11 +14,14 @@ run_viewer = False
 ready_to_start_sync = False
 ready_to_start_view = False
 
+kill=False
+
 def time_update():
     global ready_to_start_sync
     while True:
         if updater.is_update_needed():
             updater.perform_update()
+            kill=True
             exit()
         else:
             ready_to_start_sync = True  # Mesmo sem update, inicia a sincronização
@@ -72,3 +75,5 @@ if __name__ == "__main__":
 
     while True:
         time.sleep(1)
+        if kill:
+            exit()
