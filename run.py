@@ -71,6 +71,7 @@ if __name__ == "__main__":
 
     while True:
         time.sleep(1)
+        print(9999)
         if kill:
             print(1234)
             exit()
