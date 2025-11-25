@@ -50,3 +50,5 @@ def perform_update():
     os.system("git pull origin main")
 
     logging.info("Atualização concluída com sucesso.")
+
+    exit(0)  # Encerra o programa para reiniciar após a atualização
