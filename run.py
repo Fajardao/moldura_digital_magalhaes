@@ -64,9 +64,9 @@ def view_images():
 
 if __name__ == "__main__":
     
-    update_thread = threading.Thread(target=time_update)
-    sync_thread = threading.Thread(target=time_sync)
-    view_thread = threading.Thread(target=view_images)
+    update_thread = threading.Thread(target=time_update, daemon=True)
+    sync_thread = threading.Thread(target=time_sync, daemon=True)
+    view_thread = threading.Thread(target=view_images, daemon=True)
 
     update_thread.start()
     sync_thread.start()
@@ -77,4 +77,4 @@ if __name__ == "__main__":
         print(kill)
         if kill:
             print(1234)
-            exit()
+            exit(0)
