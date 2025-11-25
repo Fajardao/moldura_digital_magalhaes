@@ -1,9 +1,11 @@
 
 import os
+import sys
 import time
 import updater
 import downloader
 import threading
+import subprocess
 
 TIME_TO_UPDATE_CHECK = 86400  # Verifica a cada dia
 TIME_TO_SYNC = 600           # Sincroniza a cada 10 minutos
@@ -15,17 +17,18 @@ ready_to_start_sync = False
 ready_to_start_view = False
 
 kill=False
+restart_needed = False
 
 def time_update():
     global kill
+    global restart_needed
     global ready_to_start_sync
     while True:
         if updater.is_update_needed():
             updater.perform_update()
-            print(kill)
-
-            kill=True
-            print(kill)
+            print("Update completed, restart needed")
+            restart_needed = True
+            kill = True
         else:
             ready_to_start_sync = True  # Mesmo sem update, inicia a sincronização
         time.sleep(TIME_TO_UPDATE_CHECK)  # Verifica a cada hora
@@ -72,9 +75,17 @@ if __name__ == "__main__":
     sync_thread.start()
     view_thread.start()
 
-    while True:
-        time.sleep(1)
-        print(kill)
-        if kill:
-            print(1234)
-            exit(0)
+    try:
+        while True:
+            time.sleep(1)
+            if kill:
+                print("Terminando processo principal...")
+                if restart_needed:
+                    print("Reiniciando aplicação...")
+                    # Re-executa o script Python
+                    os.execv(sys.executable, [sys.executable] + sys.argv)
+                else:
+                    sys.exit(0)
+    except KeyboardInterrupt:
+        print("Interrupção do utilizador, encerrando...")
+        sys.exit(0)
