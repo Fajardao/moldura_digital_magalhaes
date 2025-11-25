@@ -17,6 +17,7 @@ ready_to_start_view = False
 kill=False
 
 def time_update():
+    global kill
     global ready_to_start_sync
     while True:
         if updater.is_update_needed():
