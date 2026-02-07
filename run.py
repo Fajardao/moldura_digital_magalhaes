@@ -5,7 +5,7 @@ import time
 import updater
 import downloader
 import threading
-import subprocess
+#import usb_watcher
 
 TIME_TO_UPDATE_CHECK = 86400  # Verifica a cada dia
 TIME_TO_SYNC = 600           # Sincroniza a cada 10 minutos
@@ -63,6 +63,11 @@ def view_images():
                 os.system("pkill feh")  # Termina instâncias existentes do feh
                 time.sleep(2)  # Espera o feh terminar
                 os.system(f"feh -r -z -F -D {DELAY_SHOW} {downloader.DOWNLOAD_FOLDER} &")
+
+#def watch_usb_thread():
+#    """Thread para monitorizar dispositivos USB e fazer upload automático."""
+#    usb_watcher.watch_and_upload()
+
     
 
 if __name__ == "__main__":
@@ -70,10 +75,12 @@ if __name__ == "__main__":
     update_thread = threading.Thread(target=time_update, daemon=True)
     sync_thread = threading.Thread(target=time_sync, daemon=True)
     view_thread = threading.Thread(target=view_images, daemon=True)
+    #usb_thread = threading.Thread(target=watch_usb_thread, daemon=True)
 
     update_thread.start()
     sync_thread.start()
     view_thread.start()
+    #usb_thread.start()
 
     try:
         while True:
